@@ -81,7 +81,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "eventhorizont",
+        'NAME': "freelance_hub_db",
         'USER': "postgres",
         'PASSWORD': '1',
         'HOST': "localhost",
