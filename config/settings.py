@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.users',
     'drf_spectacular',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -81,7 +82,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "eventhorizont",
+        'NAME': "freelance_db",
         'USER': "postgres",
         'PASSWORD': '1',
         'HOST': "localhost",
@@ -149,3 +150,5 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
     # 'SCHEMA_PATH_PREFIX': 'api/'
 }
+
+AUTH_USER_MODEL = 'users.User'
