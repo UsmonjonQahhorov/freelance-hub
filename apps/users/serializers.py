@@ -57,6 +57,15 @@ class UserDetailSerializer(serializers.ModelSerializer):
         ]
 
 
+class UserLoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            "email",
+            "password",
+        ]
+
+
 class UserListSerializer(serializers.ModelSerializer):
     class Meta:
         model = User

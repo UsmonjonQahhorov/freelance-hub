@@ -17,7 +17,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     )
     last_name = models.CharField(max_length=150)
     phone_number = models.CharField(max_length=13, unique=True)
-    email = models.EmailField(_("email address"), blank=True)
+    email = models.EmailField(_("email address"), blank=True, unique=True)
     password = models.CharField(max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -25,8 +25,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     EMAIL_FIELD = "email"
-    USERNAME_FIELD = "phone_number"
-    REQUIRED_FIELDS = ["email"]
+    USERNAME_FIELD = "email"
+    # REQUIRED_FIELDS = [""]
 
     class Meta:
         verbose_name = _("user")
