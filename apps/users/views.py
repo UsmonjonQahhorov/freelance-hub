@@ -108,3 +108,4 @@ class UserRegView(ListModelMixin, CreateModelMixin, UpdateModelMixin, DestroyMod
 #set password endpoint alohida
 #get-me alohida endpoint
 #django signals
+# glpat-gFWD-ytUa_RKThWG9znc
