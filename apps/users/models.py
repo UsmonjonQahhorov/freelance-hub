@@ -16,17 +16,21 @@ class User(AbstractBaseUser, PermissionsMixin):
         ),
     )
     last_name = models.CharField(max_length=150)
+    username = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=13, unique=True)
     email = models.EmailField(_("email address"), blank=True, unique=True)
     password = models.CharField(max_length=250)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+
     objects = UserManager()
 
     EMAIL_FIELD = "email"
     USERNAME_FIELD = "email"
-    # REQUIRED_FIELDS = [""]
+    REQUIRED_FIELDS = ["username"]
 
     class Meta:
         verbose_name = _("user")
