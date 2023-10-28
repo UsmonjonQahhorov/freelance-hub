@@ -104,6 +104,7 @@ class UserRegView(ListModelMixin, CreateModelMixin, UpdateModelMixin, DestroyMod
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+
 #set password endpoint alohida
 #get-me alohida endpoint
 #django signals
