@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 from datetime import timedelta
 from pathlib import Path
+import datetime
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -38,6 +39,8 @@ INSTALLED_APPS = [
     'apps.users',
     'drf_spectacular',
     'rest_framework',
+    'rest_framework.authtoken',
+    'oauth2_provider',
 ]
 
 MIDDLEWARE = [
@@ -132,6 +135,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+
     ),
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
@@ -152,3 +156,12 @@ SPECTACULAR_SETTINGS = {
 }
 
 AUTH_USER_MODEL = 'users.User'
+LOGIN_URL = '/admin/login/'
+
+JWT_AUTH = {
+    'JWT_SECRET_KEY': 'dfsf4f4khj4k32hjkhkjh42jknkln3l2@4MK3LM$m#LKM5KL$#$MLK3',
+    'JWT_ALGORITHM': 'HS256',
+    'JWT_ALLOW_REFRESH': True,
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
+    'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
+}
