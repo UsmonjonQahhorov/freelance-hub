@@ -8,6 +8,7 @@ class Contact(models.Model):
         User, related_name='friends', on_delete=models.CASCADE)
     friends = models.ManyToManyField('self', blank=True)
 
+
     def __str__(self):
         return self.user.username
 
