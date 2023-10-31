@@ -1,3 +1,4 @@
+<!-- chat/templates/chat/room.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,18 +14,16 @@
     const roomName = JSON.parse(document.getElementById('room-name').textContent);
 
     const chatSocket = new WebSocket(
-        'ws://localhost:8000/ws/chat/' + roomName + '/'
+        'ws://'
+        + window.location.host
+        + '/ws/chat/'
+        + roomName
+        + '/'
     );
-
 
     chatSocket.onmessage = function (e) {
         const data = JSON.parse(e.data);
-        const chatLog = document.querySelector('#chat-log');
-        const messageContainer = document.createElement('div');
-        messageContainer.className = 'message';
-        messageContainer.textContent = `${data.username}: ${data.message}`;
-        chatLog.appendChild(messageContainer);
-        chatLog.scrollTop = chatLog.scrollHeight; // Chat logni pastga aylantirish uchun
+        document.querySelector('#chat-log').value += (data.message + '\n');
     };
 
     chatSocket.onclose = function (e) {
@@ -42,13 +41,10 @@
         const messageInputDom = document.querySelector('#chat-message-input');
         const message = messageInputDom.value;
         chatSocket.send(JSON.stringify({
-            'message': message,
+            'message': message
         }));
         messageInputDom.value = '';
     };
-
-
 </script>
 </body>
 </html>
-

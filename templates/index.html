@@ -1,4 +1,3 @@
-<!-- chat/templates/chat/index.html -->
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,22 +5,31 @@
     <title>Chat Rooms</title>
 </head>
 <body>
-    What chat room would you like to enter?<br>
-    <input id="room-name-input" type="text" size="100"><br>
-    <input id="room-name-submit" type="button" value="Enter">
+<div id="chat-container" style="width: 80%; margin: 0 auto;">
+    <!-- Bu divda qabul qilingan SMS chiqariladi -->
+</div>
+<br>
+What chat room would you like to enter?<br>
+<input id="room-name-input" type="text" size="100"><br>
+<input id="room-name-submit" type="button" value="Enter">
 
-    <script>
-        document.querySelector('#room-name-input').focus();
-        document.querySelector('#room-name-input').onkeyup = function(e) {
-            if (e.key === 'Enter') {  // enter, return
-                document.querySelector('#room-name-submit').click();
-            }
-        };
+<script>
+    document.querySelector('#room-name-input').focus();
+    document.querySelector('#room-name-input').onkeyup = function (e) {
+        if (e.key === 'Enter') {
+            document.querySelector('#room-name-submit').click();
+        }
+    };
 
-        document.querySelector('#room-name-submit').onclick = function(e) {
-            var roomName = document.querySelector('#room-name-input').value;
-            window.location.pathname = '/chat/' + roomName + '/';
-        };
-    </script>
+    document.querySelector('#room-name-submit').onclick = function (e) {
+        var roomName = document.querySelector('#room-name-input').value;
+        var chatContainer = document.querySelector('#chat-container');
+        var newMessage = document.createElement('div');
+        newMessage.textContent = roomName; // Bu qatorda kiritilgan SMS chiqadi
+        chatContainer.appendChild(newMessage);
+        window.location.pathname = '/chat/' + roomName + '/';
+    };
+</script>
 </body>
 </html>
+

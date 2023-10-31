@@ -3,6 +3,8 @@ import json
 
 class ChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
+        user = self.scope["user"]
+        print(user.is_authenticated)
         self.room_name = self.scope["url_route"]["kwargs"]["room_name"]
         self.room_group_name = f"chat_{self.room_name}"
         await self.channel_layer.group_add(self.room_group_name, self.channel_name)
@@ -28,6 +30,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 class UserConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         user = self.scope["user"]
+
         if user.is_authenticated:
             await self.accept()
             await self.send(text_data="Salom, foydalanuvchi!")

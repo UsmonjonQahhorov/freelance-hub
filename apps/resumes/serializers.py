@@ -35,3 +35,4 @@ class ResumesListSerializer(serializers.ModelSerializer):
         model = Resumes
         # exclude = ['created_at', 'updated_at', 'skills', 'vacancies']
         exclude = ['created_at', 'updated_at']
+

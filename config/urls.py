@@ -23,7 +23,6 @@ from drf_spectacular.views import (
 )
 
 urlpatterns = [
-    # path('chat/',include('apps.message.urls')),
     path('', include('apps.urls')),
     path('admin/', admin.site.urls),
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
