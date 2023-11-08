@@ -1,20 +1,22 @@
-from apps.resumes.choices import ResumeStatusChoice
+from apps.resumes.choices import ResumeStatusChoice, ResumeGenderChoices, ResumeEducationChoices
 from django.db import models
-
-from apps.users.models import User
 
 
 class Resumes(models.Model):
-    owner = models.OneToOneField(to=User, on_delete=models.PROTECT)
+    owner = models.OneToOneField('users.User', on_delete=models.PROTECT)
+    surname = models.CharField(max_length=100, null=True)
+    gender = models.CharField(choices=ResumeGenderChoices.choices)
     location = models.CharField(max_length=255)
-    education = models.JSONField
+    birthday = models.DateTimeField
+    citizenship = models.CharField(max_length=30)
+    level_education = models.CharField(choices=ResumeEducationChoices.choices)
+    experience_year = models.FloatField()
     status = models.CharField(choices=ResumeStatusChoice.choices)
+    profession = models.ForeignKey('professions.Professions', on_delete=models.PROTECT)
+    skills = models.ManyToManyField('skills.Skills', through='ResumeSkills')
+    vacancies = models.ManyToManyField('vacancies.Vacancies', through='VacancyResume')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    # profession = models.OneToOneField(to=Professions, on_delete=models.PROTECT)
-    # skills = models.ManyToManyField(Skills, through="ResumeSkills")
-    # vacancies = models.ManyToManyField(Vacancies, through="VacancyResume")
 
     class Meta:
         verbose_name = "Resume"
@@ -22,3 +24,17 @@ class Resumes(models.Model):
 
     def __str__(self):
         return f"{self.location}"
+
+
+class ResumeSkills(models.Model):
+    resume = models.ForeignKey(Resumes, on_delete=models.PROTECT)
+    skill = models.ForeignKey('skills.Skills', on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+
+class VacancyResume(models.Model):
+    resume = models.ForeignKey(Resumes, on_delete=models.PROTECT)
+    vacancy = models.ForeignKey('vacancies.Vacancies', on_delete=models.PROTECT)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)

@@ -39,15 +39,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.users',
-    'apps.resumes',
     'apps.message',
     'drf_spectacular',
     'rest_framework',
     'rest_framework.authtoken',
     'oauth2_provider',
+    'apps.resumes',
+    'apps.professions',
+    'apps.skills',
+    'apps.vacancies'
 ]
 
 ASGI_APPLICATION = 'config.asgi.application'
+
 CHANNEL_LAYERS = {
     "default": {
         "BACKEND": "channels_redis.core.RedisChannelLayer",
@@ -99,7 +103,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "freelance_hub",
+        'NAME': "freelance_db",
         'USER': "postgres",
         'PASSWORD': '1',
         'HOST': "localhost",
@@ -179,3 +183,9 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
 }
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'qohhorovusmonjon@gmail.com'
+EMAIL_HOST_PASSWORD = 'xxcl bdyz fbgq smcx'
