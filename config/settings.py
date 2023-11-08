@@ -41,6 +41,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'oauth2_provider',
+    'apps.resumes',
+    'apps.professions',
+    'apps.skills',
+    'apps.vacancies'
 ]
 
 MIDDLEWARE = [
@@ -165,3 +169,9 @@ JWT_AUTH = {
     'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
     'JWT_REFRESH_EXPIRATION_DELTA': datetime.timedelta(days=7),
 }
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = 'qohhorovusmonjon@gmail.com'
+EMAIL_HOST_PASSWORD = 'xxcl bdyz fbgq smcx'
