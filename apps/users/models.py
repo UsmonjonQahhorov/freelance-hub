@@ -65,5 +65,3 @@ class Employer(models.Model):
     company = models.CharField(max_length=150, unique=True)
     location = models.CharField(max_length=150)
     user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="user_employer")
-
-
