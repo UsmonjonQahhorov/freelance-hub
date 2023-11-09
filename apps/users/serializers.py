@@ -22,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
 
-class UserRegisterSerializer(serializers.ModelSerializer):
+class UserRegisterSerializer(serializers.Serializer):
     password = serializers.CharField(max_length=150, write_only=True)
 
     class Meta:
@@ -81,7 +81,12 @@ class CheckActivationCodeSerializer(serializers.Serializer):
         data = getKey(key=attrs['email'])
         print(data)
         if data and data['activate_code'] == attrs['activate_code']:
+            # Set the is_verified field to True for the user
+            user = data['user']
+            user.is_verified = True
+            user.save()
             return attrs
+
         raise serializers.ValidationError(
             {"error": "Error activate code or email"}
         )
@@ -108,6 +113,15 @@ class UserRetrieveSerializer(serializers.ModelSerializer):
             "email",
         ]
 
+        class Employer(serializers.ModelSerializer):
+            class Meta:
+                model = Employer
+                fields = [
+                    "company",
+                    "location"
+                    "user"
+                ]
+
 
 class EmployerRegisterSerializer(serializers.Serializer):
     first_name = serializers.CharField(max_length=30, write_only=True)
@@ -127,30 +141,42 @@ class EmployerRegisterSerializer(serializers.Serializer):
             raise serializers.ValidationError("Ushbu email manzil allaqachon ro'yxatdan o'tgan.")
         return value
 
-    def create(self, validated_data):
+    def validate(self, attrs):
         activate_code = random.randint(1000, 9999)
-        user = User.objects.create_user(
-            username=validated_data['email'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
-            phone_number=validated_data['phone_number'],
-            email=validated_data['email'],
-            password=make_password(validated_data['password']),
-            is_active=False,
+
+        user = User(
+            first_name=attrs['first_name'],
+            email=attrs['email'],
+            last_name=attrs['last_name'],
+            phone_number=attrs['phone_number'],
+            password=make_password(attrs['password']),
+            is_active=True,
             employer=True
         )
+        user.save()
 
-        Employer.objects.create(
-            user=user,
-            company=validated_data['company'],
-            location=validated_data['location'],
+        employer = Employer(
+            company=attrs["company"],
+            location=attrs["location"],
+            user=user
         )
 
+        employer.save()
+        setKey(
+            key=attrs['email'],
+            value={
+                "user": user,
+                "employer": employer,
+                "activate_code": activate_code
+            },
+            timeout=300
+        )
+        print(getKey(key=attrs['email']))
         send_mail(
             subject="Subject here",
             message=f"Your activation code.\n{activate_code}",
             from_email=EMAIL_HOST_USER,
-            recipient_list=[validated_data['email']],
+            recipient_list=[attrs['email']],
             fail_silently=False,
         )
-        return user
+        return super().validate(attrs)
