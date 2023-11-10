@@ -1,14 +1,14 @@
 import random
 from django.core.mail import send_mail
 from rest_framework import status
-from rest_framework.generics import GenericAPIView, CreateAPIView, ListAPIView
+from rest_framework.generics import GenericAPIView, CreateAPIView, ListAPIView, RetrieveAPIView
 from rest_framework.response import Response
 from apps.users.models import User, getKey
 from apps.users.permissions import UserPermission
 from rest_framework.permissions import AllowAny
 from apps.users.serializers import (UserRegisterSerializer, CheckActivationCodeSerializer, ResetPasswordSerializer,
                                     ResetPasswordConfirmSerializer, UserRetrieveSerializer, EmployerRegisterSerializer)
-from apps.users.validators import CustomEmailValidator
+from rest_framework.views import APIView
 
 
 class UserInfoListAPIView(ListAPIView):
@@ -121,3 +121,13 @@ class EmployerRegisterAPIView(CreateAPIView):
         serializer.is_valid(raise_exception=True)
         headers = self.get_success_headers(serializer.data)
         return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
+
+#
+# class UserRetrieveAPIView(APIView):
+#     def get(self, request):
+#         user_instance = request.user
+#         if not user_instance:
+#             return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
+#
+#         serializer = UserRetrieveSerializer(user_instance)
+#         return Response(serializer.data, status=status.HTTP_200_OK)
