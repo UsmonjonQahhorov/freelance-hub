@@ -22,9 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
 
-class UserRegisterSerializer(serializers.Serializer):
-    password = serializers.CharField(max_length=150, write_only=True)
-
+class UserRegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
@@ -103,24 +101,18 @@ class ResetPasswordConfirmSerializer(serializers.Serializer):
     confirm_password = serializers.CharField()
 
 
+class EmployerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Employer
+        fields = "__all__"
+
+
 class UserRetrieveSerializer(serializers.ModelSerializer):
+    employer = EmployerSerializer(required=False)
+
     class Meta:
         model = User
-        fields = [
-            "first_name",
-            "last_name",
-            "phone_number",
-            "email",
-        ]
-
-        class Employer(serializers.ModelSerializer):
-            class Meta:
-                model = Employer
-                fields = [
-                    "company",
-                    "location"
-                    "user"
-                ]
+        fields = "__all__"
 
 
 class EmployerRegisterSerializer(serializers.Serializer):
