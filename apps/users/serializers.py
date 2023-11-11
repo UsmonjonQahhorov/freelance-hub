@@ -72,7 +72,7 @@ class UserRegisterSerializer(serializers.ModelSerializer):
 
 
 class CheckActivationCodeSerializer(serializers.Serializer):
-    email = serializers.EmailField()
+    email = serializers.EmailField(write_only=True)
     activate_code = serializers.IntegerField(write_only=True)
 
     def validate(self, attrs):

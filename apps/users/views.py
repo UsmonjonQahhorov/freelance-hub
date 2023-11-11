@@ -47,11 +47,18 @@ class CheckActivationCodeGenericAPIView(GenericAPIView):
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         data = serializer.data
-        user = getKey(key=data['email'])['user']
-        user.is_active = True
-        user.is_verified = True
-        user.save()
-        return Response({"message": "Your email has been confirmed"}, status=status.HTTP_200_OK)
+        print(data)
+        if 'email' not in data:
+            user_data = getKey(key=data['email'])
+
+            if 'user' not in user_data:
+                user = user_data['user']
+                user.is_active = True
+                user.is_verified = True
+                user.save()
+                return Response({"message": "Your email has been confirmed"}, status=status.HTTP_200_OK)
+
+        return Response({"error": "Invalid data"}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ResetPasswordView(CreateAPIView):
