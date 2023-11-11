@@ -79,7 +79,6 @@ class CheckActivationCodeSerializer(serializers.Serializer):
         data = getKey(key=attrs['email'])
         print(data)
         if data and data['activate_code'] == attrs['activate_code']:
-            # Set the is_verified field to True for the user
             user = data['user']
             user.is_verified = True
             user.save()
