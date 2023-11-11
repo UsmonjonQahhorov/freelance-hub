@@ -171,3 +171,6 @@ class EmployerRegisterSerializer(serializers.Serializer):
             fail_silently=False,
         )
         return super().validate(attrs)
+
+
+# to reprezent

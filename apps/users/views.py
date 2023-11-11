@@ -8,7 +8,6 @@ from apps.users.permissions import UserPermission
 from rest_framework.permissions import AllowAny
 from apps.users.serializers import (UserRegisterSerializer, CheckActivationCodeSerializer, ResetPasswordSerializer,
                                     ResetPasswordConfirmSerializer, UserRetrieveSerializer, EmployerRegisterSerializer)
-from rest_framework.views import APIView
 
 
 class UserInfoListAPIView(ListAPIView):
