@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'apps.users',
     'apps.resumes',
-    'apps.resumes',
     'apps.message',
     'drf_spectacular',
     'rest_framework',
@@ -100,7 +99,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': "freelance_db",
+        'NAME': "freelance_hub",
         'USER': "postgres",
         'PASSWORD': '1',
         'HOST': "localhost",
