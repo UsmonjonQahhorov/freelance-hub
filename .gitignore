@@ -413,4 +413,12 @@ fabric.properties
 .idea
 .idea/
 venv
+.gitignore
+apps/resumes/migrations
+apps/professions/migrations
+apps/users/migrations
+apps/skills/migrations
+apps/vacancies/migrations
+
+
 
