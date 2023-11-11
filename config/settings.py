@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'oauth2_provider',
 ]
 
-
 ASGI_APPLICATION = 'config.asgi.application'
 CHANNEL_LAYERS = {
     "default": {
@@ -57,8 +56,6 @@ CHANNEL_LAYERS = {
         },
     },
 }
-
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -143,8 +140,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
-
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

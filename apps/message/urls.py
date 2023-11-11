@@ -1,9 +1,15 @@
-from django.urls import path
+from django.urls import path, re_path
 from apps.message import views
 
+from rest_framework.routers import DefaultRouter
+
+from apps.message.views import MessageViewSet
+
+app_name = 'chat'
+
+router = DefaultRouter()
+router.register('message', MessageViewSet, basename='message')
+
 urlpatterns = [
-    path('chat/', views.index, name='index'),
-    path("chat/<str:room_name>/", views.room, name="room"),
-]
-
-
+                  path("", views.index, name="index")
+              ] + router.urls
