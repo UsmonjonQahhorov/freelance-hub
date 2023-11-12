@@ -33,7 +33,6 @@ class UserRegisterSerializer(serializers.ModelSerializer):
             "password"
         ]
 
-
     def validate_email(self, value):
         if not value:
             raise serializers.ValidationError("Email manzilni kiritishingiz kerak.")
@@ -42,6 +41,34 @@ class UserRegisterSerializer(serializers.ModelSerializer):
         if User.objects.filter(email=value).exists():
             raise serializers.ValidationError("Ushbu email manzil allaqachon ro'yxatdan o'tgan.")
         return value
+
+    def validate(self, attrs):
+        activate_code = random.randint(100000, 999999)
+        user = User(
+            first_name=attrs['first_name'],
+            last_name=attrs['last_name'],
+            email=attrs['email'],
+            phone_number=attrs['phone_number'],
+            password=make_password(attrs['password']),
+            is_active=True,
+        )
+        setKey(
+            key=attrs['email'],
+            value={
+                "user": user,
+                "activate_code": activate_code
+            },
+            timeout=300
+        )
+        print(getKey(key=attrs['email']))
+        send_mail(
+            subject="Activation code for you account",
+            message=f"Your activate code.\n{activate_code}",
+            from_email=EMAIL_HOST_USER,
+            recipient_list=[attrs['email']],
+            fail_silently=False,
+        )
+        return super().validate(attrs)
 
 
 class UserCreateSerializer(serializers.ModelSerializer):
@@ -101,7 +128,7 @@ class UserCreateSerializer(serializers.ModelSerializer):
 
 
 class CheckActivationCodeSerializer(serializers.Serializer):
-    email = serializers.EmailField(write_only=True)
+    email = serializers.EmailField()
     activate_code = serializers.IntegerField(write_only=True)
 
     def validate(self, attrs):
@@ -110,7 +137,6 @@ class CheckActivationCodeSerializer(serializers.Serializer):
         if data and data['activate_code'] == attrs['activate_code']:
             user = data['user']
             user.is_verified = True
-            user.save()
             return attrs
 
         raise serializers.ValidationError(
@@ -200,7 +226,5 @@ class EmployerRegisterSerializer(serializers.Serializer):
             fail_silently=False,
         )
         return super().validate(attrs)
-
-
 
 # to reprezent
