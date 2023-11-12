@@ -1,5 +1,5 @@
 from django.urls import path
-
+from rest_framework.routers import DefaultRouter
 from apps.resumes.views import ResumesSearchAPIView, ResumeDetailViewSet, ResumeCreateViewSet, ResumeDeleteViewSet, \
     ResumeUpdateViewSet, ResumeSkillCreateViewSet, ResumeSKillDeleteViewSet, ResumeSkillUpdateViewSet, \
     ResumeSkillDetailViewSet, VacancyResumeDetailViewSet, VacancyResumeUpdateViewSet, VacancyResumeDeleteViewSet, \

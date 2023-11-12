@@ -1,5 +1,4 @@
 from rest_framework import serializers
-
 from apps.resumes.models import Resumes, ResumeSkills, VacancyResume
 
 
