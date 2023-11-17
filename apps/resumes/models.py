@@ -23,7 +23,7 @@ class Resumes(models.Model):
         verbose_name_plural = "Resumes"
 
     def __str__(self):
-        return f"{self.location}"
+        return f"{self.surname}"
 
 
 class ResumeSkills(models.Model):

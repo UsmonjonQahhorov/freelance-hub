@@ -30,7 +30,7 @@ class User(AbstractBaseUser, PermissionsMixin):
     phone_number = models.CharField(max_length=13)
     email = models.EmailField(_("email address"), blank=True, unique=True)
     password = models.CharField(max_length=250)
-    employer = models.BooleanField(default=False)
+    is_employer = models.BooleanField(default=False)
 
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -38,6 +38,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
+
+    employer = models.OneToOneField("Employer", on_delete=models.CASCADE, related_name="user_employer", null=True, blank=True)
 
     objects = UserManager()
 

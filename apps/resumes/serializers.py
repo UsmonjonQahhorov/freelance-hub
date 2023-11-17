@@ -12,14 +12,14 @@ class ResumesCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = Resumes
         exclude = ['owner', 'created_at', 'updated_at']
-
-    def save(self, **kwargs):
-        citizenship = self.data.get('citizenship').lower
-        self.validated_data.pop('citizenship')
-        owner = self.context['request'].user
-        instance = Resumes(owner=owner, citizenship=citizenship, **self.validated_data)
-        instance.save()
-        return instance
+    #
+    # def save(self, **kwargs):
+    #     citizenship = self.data.get('citizenship').lower
+    #     self.validated_data.pop('citizenship')
+    #     owner = self.context['request'].user
+    #     instance = Resumes(owner=owner, citizenship=citizenship, **self.validated_data)
+    #     instance.save()
+    #     return instance
 
 
 class ResumesDetailSerializer(serializers.ModelSerializer):

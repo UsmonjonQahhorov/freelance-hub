@@ -28,6 +28,9 @@ class ResumeCreateViewSet(CreateAPIView):
     queryset = Resumes.objects.all()
     serializer_class = ResumesCreateSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(owner_id=self.request.user.id)
+
 
 class ResumeDeleteViewSet(DestroyAPIView):
     queryset = Resumes.objects.all()

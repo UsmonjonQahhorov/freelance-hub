@@ -155,18 +155,26 @@ class ResetPasswordConfirmSerializer(serializers.Serializer):
     confirm_password = serializers.CharField()
 
 
-class EmployerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Employer
-        fields = "__all__"
-
-
 class UserRetrieveSerializer(serializers.ModelSerializer):
-    employer = EmployerSerializer(required=False)
+    # user = serializers.SerializerMethodField()
 
     class Meta:
         model = User
-        fields = "__all__"
+        fields = [
+            "first_name",
+            "last_name",
+            "phone_number",
+            "email",
+        ]
+
+    # def get_user(self, obj):
+    #     user_data = {
+    #         "first_name": obj.user.first_name,
+    #         "last_name": obj.user.last_name,
+    #         "email": obj.user.email,
+    #         "phone_number": obj.user.phone_number,
+    #     }
+    #     return user_data
 
 
 class EmployerRegisterSerializer(serializers.Serializer):
@@ -197,7 +205,7 @@ class EmployerRegisterSerializer(serializers.Serializer):
             phone_number=attrs['phone_number'],
             password=make_password(attrs['password']),
             is_active=True,
-            employer=True
+            is_employer=True
         )
         user.save()
 
@@ -226,5 +234,3 @@ class EmployerRegisterSerializer(serializers.Serializer):
             fail_silently=False,
         )
         return super().validate(attrs)
-
-# to reprezent

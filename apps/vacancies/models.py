@@ -3,7 +3,7 @@ from apps.vacancies.choices import VacancyStatusChoice
 
 
 class Vacancies(models.Model):
-    owner = models.OneToOneField(to='users.User', on_delete=models.PROTECT)
+    owner = models.OneToOneField(to='users.Employer', on_delete=models.PROTECT)
     title = models.CharField(max_length=100)
     company = models.CharField(max_length=100)
     salary_from = models.FloatField(null=True)

@@ -27,6 +27,9 @@ class VacancyCreateViewSet(CreateAPIView):
     queryset = Vacancies.objects.all()
     serializer_class = VacanciesCreateSerializer
 
+    def perform_create(self, serializer):
+        serializer.save(owner_id=self.request.user.id)
+
 
 class VacancyDeleteViewSet(DestroyAPIView):
     queryset = Vacancies.objects.all()
